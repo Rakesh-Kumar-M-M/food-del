@@ -8,6 +8,7 @@ import Footer from './components/Footer/Footer'
 import Popup from './components/popup/popup'
 const App = () => {
   const [Login,setLogin]=useState(false)
+  console.log('Hello This is Rakesh');
   return (
     <>
     {Login? <Popup setLogin={setLogin}/>:<></>}
