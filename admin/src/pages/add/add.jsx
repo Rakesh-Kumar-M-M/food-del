@@ -18,13 +18,21 @@ const add = () => {
   }
   const onSubmitHandler=async(event)=>{
     event.preventDefault();
-    const formdata=new formdata();
+    const formdata=new FormData();
     formdata.append("name",data.name)
     formdata.append("description",data.description)
     formdata.append("price",Number(data.price))
     formdata.append("category",data.category)
     formdata.append("image",image)
-    const response=await axios.post(`${url}/api/food/add`)
+    const response =await axios.post(`${url}/api/food/add`,formdata);
+    if (response.data.success){
+      setdata({name:"",
+        description:"",
+        price:"",
+        category:"Salad"})
+        setimage(false)
+
+    }
   }
   
   return (
