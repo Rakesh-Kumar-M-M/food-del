@@ -1,0 +1,73 @@
+[
+    {
+      "name": "Chicken Salad",
+      "description": "chicken",
+      "price": 24,
+      "image": "1742222998471food_4.png",
+      "category": "Salad"
+    },
+    {
+      "name": "Caesar Salad",
+      "description": "Romaine lettuce, grilled chicken, croutons, parmesan cheese",
+      "price": 22,
+      "image": "1742222998471food_4.png",
+      "category": "Salad"
+    },
+    {
+      "name": "Greek Salad",
+      "description": "Tomatoes, cucumber, olives, feta cheese, onion",
+      "price": 20,
+      "image": "1742222998471food_4.png",
+      "category": "Salad"
+    },
+    {
+      "name": "Tuna Salad",
+      "description": "Tuna, lettuce, mayonnaise, boiled eggs, celery",
+      "price": 23,
+      "image": "1742222998471food_4.png",
+      "category": "Salad"
+    },
+    {
+      "name": "Avocado Chicken Salad",
+      "description": "Avocado, grilled chicken, mixed greens, tomatoes",
+      "price": 25,
+      "image": "1742222998471food_4.png",
+      "category": "Salad"
+    },
+    {
+      "name": "Fruit Salad",
+      "description": "A mix of seasonal fresh fruits",
+      "price": 18,
+      "image": "1742222998471food_4.png",
+      "category": "Salad"
+    },
+    {
+      "name": "Pasta Salad",
+      "description": "Penne pasta, cherry tomatoes, basil, mozzarella, balsamic dressing",
+      "price": 21,
+      "image": "1742222998471food_4.png",
+      "category": "Salad"
+    },
+    {
+      "name": "Shrimp Salad",
+      "description": "Shrimp, lettuce, avocado, lemon dressing",
+      "price": 26,
+      "image": "1742222998471food_4.png",
+      "category": "Salad"
+    },
+    {
+      "name": "Egg Salad",
+      "description": "Boiled eggs, mayonnaise, mustard, lettuce",
+      "price": 19,
+      "image": "1742222998471food_4.png",
+      "category": "Salad"
+    },
+    {
+      "name": "Quinoa Salad",
+      "description": "Quinoa, black beans, corn, bell peppers, lime dressing",
+      "price": 22,
+      "image": "1742222998471food_4.png",
+      "category": "Salad"
+    }
+  ]
+  
