@@ -2,7 +2,7 @@ import { assets } from '../src/assets/assets/frontend_assets/assets'
 import { StoreContext } from '../src/Context/StoreContext'
 import './Myorders.css'
 import axios from 'axios'
-import React,{useState,useContext, useEffect} from 'react'
+import React, {useState,useContext,useEffect} from 'react'
 
 const Myorders = () => {
     const [data,setdata]=useState([])
@@ -12,12 +12,14 @@ const Myorders = () => {
         setdata(response.data.data)
         console.log(response.data.data)
     }
+
     useEffect(()=>{
         if(token){
             fetchorder()
         }
     },[token])
-  return (
+  
+    return (
     <div className='my-order'>
         <h2>My orders</h2>
         <div className="container">
@@ -45,5 +47,6 @@ const Myorders = () => {
     </div>
   )
 }
+
 
 export default Myorders
