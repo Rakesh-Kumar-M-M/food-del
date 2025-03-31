@@ -4,7 +4,7 @@ import Stripe from "stripe"
 
 const stripe=new Stripe(process.env.STRIPE_SECRET_KEY)
 const placeorder=async(req,res)=>{
-    const frontend_url="http://localhost:5173"
+    const frontend_url="http://localhost:5174"
     try{
         const neworder=new ordermodel({
             userId:req.body.userId,
@@ -38,7 +38,7 @@ const placeorder=async(req,res)=>{
             line_items:line_items,
             mode:"payment",
             success_url:`${frontend_url}/verify?success=true&orderId=${neworder._id}`,
-            cancel_url:`${frontend_url}/verify?success=true&orderId=${neworder._id}`
+            cancel_url:`${frontend_url}/verify?success=false&orderId=${neworder._id}`
 
 
         })
@@ -50,14 +50,17 @@ const placeorder=async(req,res)=>{
     }
 }
 const verifyorder=async(req,res)=>{
-    const {orderId,success}=req.body
+    const {success,orderId}=req.body
     try{
-        if(success==="true"){
+        if(success=="true"){
             await ordermodel.findByIdAndUpdate(orderId,{payment:true})
-            res.json({success:true,message:paid})
+            res.json({success:true,message:"paid"})
+            
         }
         else{
             await ordermodel.findByIdAndDelete(orderId)
+            res.json({success:false,message:"Not paid"})
+
         }
     }
         catch(error){
@@ -67,4 +70,36 @@ const verifyorder=async(req,res)=>{
     }
 }
 
-export {placeorder,verifyorder}
+const userorders= async(req,res)=>{
+    try{
+        const orders=await ordermodel.find({userId:req.body.userId})
+        res.json({success:true,data:orders})
+    }
+    catch(error){
+        console.log(error)
+        res.json({success:false,message:"Error"})
+    }
+}
+
+const listorders=async(req,res)=>{
+    try{
+        const orders=await ordermodel.find({})
+        res.json({success:true,data:orders})
+    }
+    catch(error){
+        console.log(error)
+        res.json({success:false,message:"Error"})
+    }
+}
+
+const updatestatus=async(req,res)=>{
+    try{
+        await ordermodel.findByIdAndUpdate(req.body.orderId,{status:req.body.status})
+        res.json({success:true,message:"status updated"})
+    }
+    catch(error){
+        console.log(error)
+        res.json({success:false,message:"Error"})
+    }
+}
+export {placeorder,verifyorder,userorders,listorders,updatestatus}
