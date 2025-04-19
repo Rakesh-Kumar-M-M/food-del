@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import { assets } from "../../assets/assets";
-import "./add.css";
+import "./Add.css";
 import axios from "axios"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
