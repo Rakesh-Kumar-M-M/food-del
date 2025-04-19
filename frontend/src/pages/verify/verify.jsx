@@ -1,9 +1,9 @@
 import React, { useContext,useEffect } from 'react'
-import "./verify.css"
+import "./Verify.css"
 import { useSearchParams,useNavigate } from 'react-router-dom'
 import axios from "axios"
 import { StoreContext } from '../../Context/StoreContext';
-const verify = () => {
+const Verify = () => {
     const [searchpara,setsearchpara]=useSearchParams();
     const success= searchpara.get("success")
     const orderId=searchpara.get("orderId")
@@ -32,4 +32,4 @@ const verify = () => {
   )
 }
 
-export default verify
+export default Verify

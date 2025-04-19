@@ -4,7 +4,7 @@ import { assets } from '../../assets/assets/frontend_assets/assets'
 import { StoreContext } from '../../Context/StoreContext'
 import { useContext } from 'react'
 import axios from "axios"
-const popup = ({setLogin}) => {
+const Popup = ({setLogin}) => {
     const {url,settoken}=useContext(StoreContext)
 
     const [currstate,setcurrstate]=useState("Login")
@@ -64,4 +64,4 @@ const popup = ({setLogin}) => {
   )
 }
 
-export default popup
+export default Popup
