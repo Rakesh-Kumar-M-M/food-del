@@ -1,10 +1,10 @@
 import React, {useContext, useState} from 'react'
-import "./navbar.css"
+import "./Navbar.css"
 import { assets } from '../../assets/assets/frontend_assets/assets'
 import { Link } from 'react-router-dom';
 import { StoreContext } from '../../Context/StoreContext';
 import { useNavigate } from 'react-router-dom';
-const navbar = ({setLogin}) => {
+const Navbar = ({setLogin}) => {
   const {getTotal,token,settoken}=useContext(StoreContext)
   const [menu,setmenu]=useState("menu");
   const navigate = useNavigate();
@@ -53,4 +53,4 @@ const navbar = ({setLogin}) => {
   )
 }
 
-export default navbar
+export default Navbar
