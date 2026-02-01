@@ -4,8 +4,8 @@ import axios from "axios"
 export const StoreContext = createContext(null);
 const StoreContextProvider = (props) => {
   const [cartItems, setcartItems] = useState({});
-  // Hardcoded for local development reliability as per user request
-  const url = "http://localhost:4000";
+  // Use Vite env var VITE_API_URL in development or fallback to localhost
+  const url = import.meta.env.VITE_API_URL || "http://localhost:4000";
   const [token, settoken] = useState("")
   const [food_list, setfoodlist] = useState([])
   const addtocart = async (itemId) => {
