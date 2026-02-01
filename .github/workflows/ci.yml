@@ -1,0 +1,25 @@
+name: Frontend CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  check-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        working-directory: ./food-del/frontend
+        run: npm ci
+      - name: Run import case check
+        working-directory: ./food-del/frontend
+        run: npm run check:imports-case
+      - name: Build frontend
+        working-directory: ./food-del/frontend
+        run: npm run build
