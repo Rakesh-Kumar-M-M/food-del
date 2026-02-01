@@ -49,30 +49,49 @@ const addfoodFromUrl=async(req,res)=>{
         if(exists){
             return res.json({success:false,message:'Item already exists'})
         }
-        const fetchRes = await fetch(imageUrl);
-        if(!fetchRes.ok){
-            return res.status(400).json({success:false,message:'Unable to fetch image'})
-        }
-        const arrayBuffer = await fetchRes.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
-        // derive filename
-        let filename = path.basename(new URL(imageUrl).pathname) || 'image.png'
-        filename = `${Date.now()}-${filename}`
-        const uploadPath = path.join(process.cwd(),'uploads',filename)
-        fs.writeFileSync(uploadPath,buffer)
-        // attempt to resize using sharp if available
-        let sharp = null
+        let filename = null
         try{
-            sharp = (await import('sharp')).default
-        }catch(e){
-            sharp = null
-        }
-        if(sharp){
+            const fetchRes = await fetch(imageUrl);
+            if(!fetchRes.ok){
+                throw new Error('fetch failed')
+            }
+            const arrayBuffer = await fetchRes.arrayBuffer();
+            const buffer = Buffer.from(arrayBuffer);
+            // derive filename
+            filename = path.basename(new URL(imageUrl).pathname) || 'image.png'
+            filename = `${Date.now()}-${filename}`
+            const uploadPath = path.join(process.cwd(),'uploads',filename)
+            fs.writeFileSync(uploadPath,buffer)
+            // attempt to resize using sharp if available
+            let sharp = null
             try{
-                await sharp(uploadPath).resize(600,600,{fit:'cover'}).toFile(uploadPath+".tmp")
-                fs.renameSync(uploadPath+".tmp",uploadPath)
+                sharp = (await import('sharp')).default
             }catch(e){
-                console.log('sharp resize failed',e)
+                sharp = null
+            }
+            if(sharp){
+                try{
+                    await sharp(uploadPath).resize(600,600,{fit:'cover'}).toFile(uploadPath+".tmp")
+                    fs.renameSync(uploadPath+".tmp",uploadPath)
+                }catch(e){
+                    console.log('sharp resize failed',e)
+                }
+            }
+        }catch(err){
+            // fallback to local frontend assets if available
+            try{
+                const fallbackName = path.basename(new URL(imageUrl).pathname)
+                const localAssetPath = path.join(process.cwd(),'frontend','src','assets','assets','frontend_assets', fallbackName)
+                if(fs.existsSync(localAssetPath)){
+                    filename = `${Date.now()}-${fallbackName}`
+                    const uploadPath2 = path.join(process.cwd(),'uploads',filename)
+                    fs.copyFileSync(localAssetPath, uploadPath2)
+                }else{
+                    return res.status(400).json({success:false,message:'Unable to fetch image'})
+                }
+            }catch(e){
+                console.log('fallback failed',e)
+                return res.status(400).json({success:false,message:'Unable to fetch image'})
             }
         }
         const newFood = new foodmodel({
@@ -115,18 +134,41 @@ const syncAssets=async(req,res)=>{
         const results = { added:0, failed:0 }
         for(const it of items){
             try{
-                const fetchRes = await fetch(it.imageUrl);
-                if(!fetchRes.ok) { results.failed++; continue }
-                const arrayBuffer = await fetchRes.arrayBuffer();
-                const buffer = Buffer.from(arrayBuffer);
-                let filename = path.basename(new URL(it.imageUrl).pathname) || 'image.png'
-                filename = `${Date.now()}-${filename}`
-                const uploadPath = path.join(process.cwd(),'uploads',filename)
-                fs.writeFileSync(uploadPath,buffer)
-                // resize if sharp available
-                let sharp = null
-                try{ sharp = (await import('sharp')).default }catch(e){ sharp = null }
-                if(sharp){ try{ await sharp(uploadPath).resize(600,600,{fit:'cover'}).toFile(uploadPath+".tmp"); fs.renameSync(uploadPath+".tmp",uploadPath) }catch(e){console.log('sharp failed',e)} }
+                let filename = null
+                try{
+                  const fetchRes = await fetch(it.imageUrl);
+                  if(fetchRes.ok){
+                    const arrayBuffer = await fetchRes.arrayBuffer();
+                    const buffer = Buffer.from(arrayBuffer);
+                    filename = path.basename(new URL(it.imageUrl).pathname) || 'image.png'
+                    filename = `${Date.now()}-${filename}`
+                    const uploadPath = path.join(process.cwd(),'uploads',filename)
+                    fs.writeFileSync(uploadPath,buffer)
+                    // resize if sharp available
+                    let sharp = null
+                    try{ sharp = (await import('sharp')).default }catch(e){ sharp = null }
+                    if(sharp){ try{ await sharp(uploadPath).resize(600,600,{fit:'cover'}).toFile(uploadPath+".tmp"); fs.renameSync(uploadPath+".tmp",uploadPath) }catch(e){console.log('sharp failed',e)} }
+                  }else{
+                    throw new Error('fetch failed')
+                  }
+                }catch(fetchErr){
+                  // Fallback: if the image is available in the repo under frontend assets, copy it to uploads
+                  try{
+                    const fallbackName = path.basename(new URL(it.imageUrl).pathname)
+                    const localAssetPath = path.join(process.cwd(),'frontend','src','assets','assets','frontend_assets', fallbackName)
+                    if(fs.existsSync(localAssetPath)){
+                      const filename2 = `${Date.now()}-${fallbackName}`
+                      const uploadPath2 = path.join(process.cwd(),'uploads',filename2)
+                      fs.copyFileSync(localAssetPath, uploadPath2)
+                      filename = filename2
+                    }else{
+                      console.log('failed to fetch and no local fallback for', it.imageUrl)
+                    }
+                  }catch(e){
+                    console.log('fallback failed for', it.imageUrl, e)
+                  }
+                }
+                if(!filename){ results.failed++; continue }
                 const newFood = new foodmodel({ name:it.name, description:it.description||'', price:it.price||0, category:it.category||'Misc', image:filename, isAsset:true })
                 await newFood.save()
                 results.added++
