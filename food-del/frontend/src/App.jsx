@@ -1,12 +1,12 @@
 import React,{useState} from 'react'
-import Navbar from './components/Navbar/Navbar'
+import Navbar from './components/navbar/navbar'
 import {Route,Routes} from 'react-router-dom'
 import Home from './pages/Home/Home'
 import Cart from './pages/Cart/Cart'
 import Placeorder from './pages/Placeorder/Placeorder'
 import Footer from './components/Footer/Footer'
-import Popup from './components/Popup/Popup'
-import Verify from './pages/Verify/Verify'
+import Popup from './components/popup/popup'
+import Verify from './pages/verify/verify'
 import Myorders from '../Myorders/Myorders'
 const App = () => {
   const [Login,setLogin]=useState(false)
