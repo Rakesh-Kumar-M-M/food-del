@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "frontend",
+=======
+  "name": "rakesh",
+>>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -27,5 +31,13 @@
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.14.0",
     "vite": "^6.0.5"
+<<<<<<< HEAD
   }
+=======
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "eslint.config.js",
+  "author": "rakesh",
+  "license": "ISC"
+>>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
 }

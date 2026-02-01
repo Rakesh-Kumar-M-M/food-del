@@ -1,11 +1,19 @@
 import { createContext,  useEffect,  useState } from "react";
+<<<<<<< HEAD
 import { food_list as assets_food_list } from "../assets/assets/frontend_assets/assets.js";
+=======
+import { food_list } from "../assets/assets/frontend_assets/assets.js";
+>>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
 import axios from "axios"
 export const StoreContext = createContext(null);
 const StoreContextProvider = (props) => {
   const [cartItems, setcartItems] = useState({});
+<<<<<<< HEAD
   // Use Vite env var VITE_API_URL in development or fallback to localhost
   const url = import.meta.env.VITE_API_URL || "http://localhost:4000";
+=======
+  const url="https://food-del-backend-a8l0.onrender.com";
+>>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
   const [token,settoken]=useState("")
   const [food_list,setfoodlist]=useState([])
   const addtocart = async(itemId) => {
@@ -35,6 +43,7 @@ const StoreContextProvider = (props) => {
   };
   const fetchfoodlist=async()=>{
     const response=await axios.get(url+"/api/food/list")
+<<<<<<< HEAD
     const remote = response.data.data || []
     const mapped = remote.map(item=>{
       const m = {...item}
@@ -63,6 +72,9 @@ const StoreContextProvider = (props) => {
       }
     })
     setfoodlist(mapped)
+=======
+    setfoodlist(response.data.data)
+>>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
   }
   const loadcartdata=async(token)=>{
     const response=await axios.post(url+"/api/cart/get",{},{headers:{token}})

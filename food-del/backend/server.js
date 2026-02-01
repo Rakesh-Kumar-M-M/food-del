@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 import 'dotenv/config'
+=======
+>>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
 import express from "express"
 import cors from "cors"
 import { connectDB } from "./config/db.js"
 import foodRouter from "./routes/foodroute.js"
 import userRouter from "./routes/userroute.js"
+<<<<<<< HEAD
+=======
+import 'dotenv/config'
+>>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
 import cartrouter from "./routes/cartroute.js"
 import orderRouter from "./routes/orderroute.js"
 
