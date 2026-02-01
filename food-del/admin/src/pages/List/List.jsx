@@ -35,7 +35,13 @@ const importDefaults=async()=>{
   if(!confirm('Sync frontend assets into backend? This will replace matching items by name. Continue?')) return;
   setImporting(true)
   try{
-    const response = await axios.post(`${url}/api/food/sync-assets`,{ items: defaultFoods })
+    // Replace local dev frontend URLs with the deployed frontend URL if provided
+    const frontendBase = import.meta.env.VITE_FRONTEND_URL || ''
+    const itemsToSync = defaultFoods.map(it => ({
+      ...it,
+      imageUrl: (it.imageUrl || '').startsWith('http://localhost') && frontendBase ? it.imageUrl.replace('http://localhost:5174', frontendBase) : it.imageUrl
+    }))
+    const response = await axios.post(`${url}/api/food/sync-assets`,{ items: itemsToSync })
     if(response.data.success){
       toast.success(response.data.message || 'Sync complete')
       await fetchlist()
