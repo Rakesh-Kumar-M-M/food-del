@@ -5,7 +5,7 @@ export const StoreContext = createContext(null);
 const StoreContextProvider = (props) => {
   const [cartItems, setcartItems] = useState({});
   // Use Vite env var VITE_API_URL in development or fallback to localhost
-  const url = import.meta.env.VITE_API_URL || "http://localhost:4000";
+  const url = import.meta.env.VITE_API_URL || "https://food-del-backend-srpm.onrender.com";
   const [token,settoken]=useState("")
   const [food_list,setfoodlist]=useState([])
   const addtocart = async(itemId) => {
