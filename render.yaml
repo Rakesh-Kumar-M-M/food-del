@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: food-del-backend
+    env: node
+    branch: main
+    rootDir: food-del/backend
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+
+  - type: static_site
+    name: food-del-frontend
+    branch: main
+    rootDir: food-del/frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    plan: free
+    # Build-time environment variables for Vite (will be available as import.meta.env.VITE_API_URL during build)
+    env:
+      VITE_API_URL: https://food-del-backend-srpm.onrender.com
+
+# NOTES:
+# - Do NOT put production secrets in this file. Add them in Render Dashboard -> Environment for the backend service.
+# - Required env vars for the backend: MONGO_URL, JWT_SECRET, STRIPE_SECRET_KEY, FRONTEND_URL (optional)
+# - For the frontend, set VITE_API_URL as a build-time env var to your backend public URL (e.g. https://food-del-backend.onrender.com)
+# - Adjust branch/rootDir to match your repo structure if needed
