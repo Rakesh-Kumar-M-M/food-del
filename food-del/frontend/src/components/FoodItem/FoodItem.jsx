@@ -13,10 +13,26 @@ const FoodItem = ({ id, name, price, description, image, rating }) => {
           let imgSrc = ''
           if (image) {
             if (typeof image === 'string') {
-              if (image.startsWith('http') || image.startsWith('/') || image.includes('/')) imgSrc = image
-              else imgSrc = url+"/images/"+image
+              // Absolute URL (http/https)
+              if (image.startsWith('http://') || image.startsWith('https://')) {
+                imgSrc = image
+              }
+              // Root-relative paths served by backend, e.g. '/images/filename'
+              else if (image.startsWith('/')) {
+                imgSrc = url.replace(/\/$/, '') + image
+              }
+              // Paths containing a slash but no protocol (e.g. 'uploads/filename' or 'images/filename')
+              else if (image.includes('/')) {
+                // If it already contains 'images/' assume it's a backend-relative path
+                if (image.startsWith('images/')) imgSrc = url.replace(/\/$/, '') + '/' + image
+                else imgSrc = url.replace(/\/$/, '') + '/images/' + image
+              }
+              // Bare filename -> served via backend /images/<filename>
+              else {
+                imgSrc = url.replace(/\/$/, '') + '/images/' + image
+              }
             } else {
-              imgSrc = url+"/images/"+image
+              imgSrc = url.replace(/\/$/, '') + '/images/' + image
             }
           }
           return <img className="Food-item-img" src={imgSrc} alt="" />
