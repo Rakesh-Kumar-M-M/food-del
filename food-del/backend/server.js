@@ -1,9 +1,11 @@
 import 'dotenv/config'
 import express from "express"
+import path from "path"
 import cors from "cors"
 import mongoose from "mongoose"
 import { connectDB } from "./config/db.js"
 import foodRouter from "./routes/foodroute.js"
+import { seedDatabase } from "./controllers/foodcontroller.js"
 import userRouter from "./routes/userroute.js"
 import cartrouter from "./routes/cartroute.js"
 import orderRouter from "./routes/orderroute.js"
@@ -17,14 +19,15 @@ app.use(cors())
 
 // Start DB connection but do not crash the process immediately; connectDB returns boolean success
 let dbConnected = false
-;(async () => {
-  dbConnected = await connectDB({retries: 5, delay: 2000})
-})()
+  ; (async () => {
+    dbConnected = await connectDB({ retries: 5, delay: 2000 })
+    if (dbConnected) await seedDatabase()
+  })()
 
 app.use("/api/order", orderRouter)
 app.use("/api/cart", cartrouter)
 app.use("/api/food", foodRouter)
-app.use("/images", express.static(`uploads`))
+app.use("/images", express.static(path.resolve("..", "uploads")))
 app.use("/api/user", userRouter)
 
 app.get("/", (req, res) => {

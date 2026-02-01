@@ -4,22 +4,17 @@ import "./FoodItem.css";
 import { useContext } from "react";
 import { StoreContext } from "../../Context/StoreContext";
 const FoodItem = ({ id, name, price, description, image, rating }) => {
-   const{cartItems,addtocart,removecart,url}=useContext(StoreContext);
+  const { cartItems, addtocart, removecart, url } = useContext(StoreContext);
   return (
     <div className="Food-item">
       {/* Resolve image source: uploaded filename -> use backend /images/, otherwise use provided asset path/module */}
       <div className="Food-item-cont">
+        {/* Resolve image source */}
         {(() => {
-          let imgSrc = ''
-          if (image) {
-            if (typeof image === 'string') {
-              if (image.startsWith('http') || image.startsWith('/') || image.includes('/')) imgSrc = image
-              else imgSrc = url+"/images/"+image
-            } else {
-              imgSrc = url+"/images/"+image
-            }
-          }
-          return <img className="Food-item-img" src={imgSrc} alt="" />
+          const imgSrc = (image && !image.startsWith('http') && !image.startsWith('/'))
+            ? `${url}/images/${image}`
+            : image;
+          return <img className="Food-item-img" src={imgSrc} alt={name} />
         })()}
         {!cartItems[id] ? (
           <img
