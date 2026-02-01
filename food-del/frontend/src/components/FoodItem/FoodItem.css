@@ -26,7 +26,6 @@
 .food-rating img{
     width: 70px;
 }
-<<<<<<< HEAD
 .rating{
     display:flex;
     align-items:center;
@@ -35,9 +34,7 @@
 .rating-value{
     font-weight:700;
     color:#333;
-}
-=======
->>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
+} 
 
 .food-desc{
     color: #676767;

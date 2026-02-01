@@ -4,7 +4,6 @@ import "./Add.css";
 import axios from "axios"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 
 
@@ -12,12 +11,6 @@ const Add = ({url}) => {
   const navigate = useNavigate();
   const [image,setimage]=useState(false);
   const [loading,setLoading]=useState(false);
-=======
-
-
-const Add = ({url}) => {
-  const [image,setimage]=useState(false);
->>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
   const [data,setdata]=useState({
     name:"",
     description:"",
@@ -32,17 +25,13 @@ const Add = ({url}) => {
   }
   const onSubmitHandler=async(event)=>{
     event.preventDefault();
-<<<<<<< HEAD
     setLoading(true);
-=======
->>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
     const formdata= new FormData();
     formdata.append("name",data.name)
     formdata.append("description",data.description)
     formdata.append("price",Number(data.price))
     formdata.append("category",data.category)
     formdata.append("image",image)
-<<<<<<< HEAD
     try{
       const response=await axios.post(`${url}/api/food/add`,formdata)
       if (response.data.success){
@@ -68,23 +57,7 @@ const Add = ({url}) => {
     }
 }
 
-=======
-    const response=await axios.post(`${url}/api/food/add`,formdata)
-    if (response.data.success){
-      setdata({
-        name:"",
-        description:"",
-        price:"",
-        category:"Salad"
-      })
-      setimage(false)
-      toast.success(response.data.message)
-    }
-    else{
-      toast.error(response.data.message)
-    }
-}
->>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
+
   return (
     <div className="add">
       <form className="flex-col" onSubmit={onSubmitHandler}>

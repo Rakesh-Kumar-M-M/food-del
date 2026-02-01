@@ -1,6 +1,5 @@
 import foodmodel from "../models/foodmodel.js";
 import fs from 'fs'
-<<<<<<< HEAD
 import path from 'path'
 
 const addfood=async(req,res)=>{
@@ -21,30 +20,23 @@ const addfood=async(req,res)=>{
             console.log('sharp resize failed',e)
         }
     }
-=======
-
-const addfood=async(req,res)=>{
-    let image_filename=`${req.file.filename}`;
->>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
     const food =new foodmodel({
         name:req.body.name,
         description:req.body.description,
         price:req.body.price,
         category:req.body.category,
         image:image_filename
-    
     })
     try{
         await food.save();
         res.json({success:true,message:"food added"})
-
     }
     catch(error){
         console.log(error)
         res.json({success:false,message:"Error"})
     }
 }
-<<<<<<< HEAD
+
 const addfoodFromUrl=async(req,res)=>{
     // Expects JSON: { name, description, price, category, imageUrl }
     const {name,description,price,category,imageUrl} = req.body;
@@ -99,19 +91,17 @@ const addfoodFromUrl=async(req,res)=>{
         res.status(500).json({success:false,message:'Error'})
     }
 }
-=======
->>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
+
 const listfood=async(req,res)=>{
     try{
         const foods=await foodmodel.find({})
-        res.json({success:true,data:foods})}
-        catch(error){
+        res.json({success:true,data:foods})
+    }
+    catch(error){
         console.log(error)
         res.json({success:false,message:"Error"})
-        }
-
+    }
 }
-<<<<<<< HEAD
 
 const syncAssets=async(req,res)=>{
     // Expects req.body.items = [{name,description,price,category,imageUrl},...]
@@ -125,7 +115,6 @@ const syncAssets=async(req,res)=>{
         const results = { added:0, failed:0 }
         for(const it of items){
             try{
-                // reuse add-from-url logic by calling internal helper
                 const fetchRes = await fetch(it.imageUrl);
                 if(!fetchRes.ok) { results.failed++; continue }
                 const arrayBuffer = await fetchRes.arrayBuffer();
@@ -150,8 +139,7 @@ const syncAssets=async(req,res)=>{
         res.status(500).json({success:false,message:'Error'})
     }
 }
-=======
->>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
+
 const removefood=async(req,res)=>{
     try{
         const food=await foodmodel.findById(req.body.id);
@@ -164,8 +152,5 @@ const removefood=async(req,res)=>{
         res.json({success:false,message:"error"})
     }
 }
-<<<<<<< HEAD
+
 export {addfood,addfoodFromUrl,syncAssets,listfood,removefood}
-=======
-export {addfood,listfood,removefood}
->>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527

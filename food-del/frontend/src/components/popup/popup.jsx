@@ -13,10 +13,7 @@ const Popup = ({setLogin}) => {
         email:"",
         password:""
     })
-<<<<<<< HEAD
     const [agree,setAgree]=useState(false)
-=======
->>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
     const onChangeHandler=(event)=>{
         const name=event.target.name;
         const value=event.target.value;
@@ -24,13 +21,10 @@ const Popup = ({setLogin}) => {
     }
     const onLogin=async(event)=>{
         event.preventDefault();
-<<<<<<< HEAD
         if (!agree){
             alert('Please accept terms to continue.')
             return;
         }
-=======
->>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
         let newUrl=url;
         if(currstate==="Login"){
             newUrl+="/api/user/login"
@@ -38,7 +32,6 @@ const Popup = ({setLogin}) => {
         else{
             newUrl+="/api/user/register"
         }
-<<<<<<< HEAD
         try{
             const response=await axios.post(newUrl,data)
             if (response.data.success){
@@ -53,16 +46,6 @@ const Popup = ({setLogin}) => {
             console.error(error)
             const msg = error?.response?.data?.message || error.message || 'Network error'
             alert(msg)
-=======
-        const response=await axios.post(newUrl,data)
-        if (response.data.success){
-            settoken(response.data.token);
-            localStorage.setItem("token",response.data.token);
-            setLogin(false);
-        }
-        else{
-            alert(response.data.message)
->>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
         }
         
     }
@@ -78,15 +61,9 @@ const Popup = ({setLogin}) => {
                 <input name='email' onChange={onChangeHandler} value={data.email} type="email" placeholder='Your email' required></input>
                 <input name='password' onChange={onChangeHandler} value={data.password} type="password" placeholder='Your password' required></input>            
                 </div>
-<<<<<<< HEAD
             <button type="submit" disabled={!agree}>{currstate==="sign up"?"Create Account":"Login"}</button>
             <div className='login-popup'>
                 <input type="checkbox" checked={agree} onChange={(e)=>setAgree(e.target.checked)} />
-=======
-            <button type="submit">{currstate==="sign up"?"Create Account":"Login"}</button>
-            <div className='login-popup'>
-                <input type="checkbox" required />
->>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
                 <p>BY continuing I agree to the terms of use & privacy policy</p>
             </div>
             {currstate==="Login"?

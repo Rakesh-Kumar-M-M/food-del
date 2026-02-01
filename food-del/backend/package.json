@@ -24,10 +24,7 @@
     "mongoose": "^8.12.1",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.9",
-<<<<<<< HEAD
     "sharp": "^0.34.5",
-=======
->>>>>>> 1b69a9ca1a54446af8b8c4f195adddaa24068527
     "stripe": "^17.7.0",
     "validator": "^13.12.0"
   }
